@@ -1,0 +1,47 @@
+apiVersion: skaffold/v4beta1
+kind: Config
+metadata:
+  name: ticketing-dev
+build:
+  local:
+    push: false
+  artifacts:
+    - image: phongpt156/auth
+      context: auth
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: phongpt156/client
+      context: client
+      sync:
+        manual:
+          - dest: .
+            src: "**/*.js"
+    - image: phongpt156/tickets
+      context: tickets
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: phongpt156/orders
+      context: orders
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: phongpt156/expiration
+      context: expiration
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: phongpt156/payments
+      context: payments
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+manifests:
+  rawYaml:
+    - infra/k8s/*
